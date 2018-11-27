@@ -14,7 +14,7 @@
               <div class="menuItem-l"></div>
               <span>{{item.name}}</span>
               <div class="menuItem-r"></div>
-              <i class="closePage" @click="closePage(item.URl,index)">x</i>
+              <i class="closePage" @click.stop="closePage(item.URl,index)">x</i>
           </li>
 
         </div>
@@ -42,7 +42,18 @@ export default {
       debugger
       this.$store.commit('switchPage', url)
     },
-    closePage (url, index) {
+    closePage (url, $index) {
+      let $url = ''
+      if ($index !== 0) {
+        $url = this.currentMenu[$index - 1].URl
+      } else if (this.currentMenu.length !== 1) {
+        $url = this.currentMenu[1].URl
+      } else {
+        $url = ''
+      }
+      let string = JSON.stringify(this.currentMenu.splice($index, 1))
+      this.currentMenu = JSON.parse(string)
+      this.$store.commit('switchPage', $url)
     }
   }
 }
