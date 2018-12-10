@@ -1,7 +1,7 @@
  <template>
    <div class="content">
         <div class="logmsg" >
-            <div>
+            <!-- <div>
                <h2>{{title}}</h2>
             </div>
             <div class="name">
@@ -14,9 +14,23 @@
             </div>
             <div class="landBox-con check">
                 <input type="submit" value="登 录" class="sub" @click="login" />
-                <!-- <i class="el-icon-loading"></i> -->
                 <div class="login_fal" v-cloak>{{msg}}</div>
-            </div>
+            </div> -->
+            <el-date-picker
+              v-model="startTime"
+              type="date"
+              placeholder="选择开始日期时间"
+              align="right"
+              :picker-options="startPickerOptions">
+            </el-date-picker>
+
+            <el-date-picker
+              v-model="endTime"
+              type="date"
+              placeholder="选择结束日期时间"
+              align="right"
+              :picker-options="endPickerOptions">
+            </el-date-picker>
          </div>
    </div>
 </template>
@@ -28,8 +42,73 @@ export default {
       this.$store.commit('delToken', '')
     }
   },
+  watch :{
+      startTime(newV,oldV){
+        let date = new Date(newV)
+        let year = date.getFullYear() + '';
+        let month = date.getMonth() + 1 + '';
+       if(this.endTime){
+        let end = new Date(this.endTime)
+        let endYear = end.getFullYear() + ''
+        let endMonth = end.getMonth() + 1 + '';
+        if (year !== endYear) {
+          this.endTime = ''
+           this.maxDay = new Date(year,month,0);
+        } else {
+          if(month !== endMonth){
+           this.maxDay = new Date(year,month,0);
+          }
+        }
+       } else {
+          this.maxDay = new Date(year,month,0);
+       } 
+      },
+      endTime(newV,oldV){
+        if(newV){
+          let date = new Date(newV)
+          let year = date.getFullYear() + '';
+          let month = date.getMonth() + 1 + '';
+          if(this.startTime){
+            let start = new Date(this.startTime)
+            let startYear = start.getFullYear() + ''
+            let startMonth = start.getMonth() + 1 + '';
+            if(month !== startMonth){
+              this.maxDay = new Date(year,month,0);
+            }
+          } else {
+              this.maxDay = new Date(year,month,0);
+          } 
+        }
+      }
+    },
   data () {
     return {
+      // JXX ADD
+// 时间不小于计划时间
+       startPickerOptions: {//开始
+            disabledDate: picked => {
+                let to = picked.getTime()
+                console.log(new Date().getTime() - 8.64e7)
+                return to < new Date().getTime() - 8.64e7
+            }
+        },
+        endPickerOptions: {//结束
+          disabledDate: picked => {
+              let to = picked.getTime();
+              if (this.startTime) {
+                  return (
+                       to < (new Date(this.startTime)).getTime() ||
+                       to > this.maxDay.getTime()
+                  );
+              } else {
+                 return to < new Date()
+              }
+          }
+        },
+        startTime:'',
+        endTime:'',
+        maxDay : '',
+      // 
       msg: '',
       title: '登录',
       username: '',

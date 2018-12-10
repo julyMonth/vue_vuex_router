@@ -11,23 +11,23 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/dtc': {
-        target : 'https://10.33.29.144',
-        changeOrigin: true,  //是否跨域
-        secure: false,
-        headers: {
-          Referer: 'https://10.33.29.144',
-          Cookie: 'JSESSIONID=AA08E794DE50D5325B5E0F09E9DF8ACB; JSESSIONID=F5305E5772EDB5B11E09EB07FC1B2591' // target登录后的cookie
-          // Cookie: "home_page=https://10.33.29.144:443/portal/; _i18n_locale=zh_CN;JSESSIONID=58F2C72304FD714EA501E553F95EE66C' // target登录后的cookie
-        },
-        // pathRewrite: {
-        //   '^/api': '/dtc'
-        // }
-      }
+      // '/dtc': {
+      //   target : 'https://10.33.29.144',
+      //   changeOrigin: true,  //是否跨域
+      //   secure: false,
+      //   headers: {
+      //     Referer: 'https://10.33.29.144',
+      //     Cookie: 'JSESSIONID=F05CD8426616BAE00ADF1FCAA4E4A4CF; JSESSIONID=D14017E848EEB2B5D63ADB0A37CA3999' // target登录后的cookie
+      //     // Cookie: "home_page=https://10.33.29.144:443/portal/; _i18n_locale=zh_CN;JSESSIONID=58F2C72304FD714EA501E553F95EE66C' // target登录后的cookie
+      //   },
+      //   // pathRewrite: {
+      //   //   '^/api': '/dtc'
+      //   // }
+      // }
     },
 
     // Various Dev Server settings
-    host: '10.16.80.113', // can be overwritten by process.env.HOST
+    host: '10.16.80.27', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
